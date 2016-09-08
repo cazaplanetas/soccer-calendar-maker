@@ -5,21 +5,51 @@ namespace Codehell\SoccerCalendar;
 
 class CalendarMaker{
 
-    private $list;
+    protected $list;
+    protected $calendar;
 
-    public function set($teams)
+
+    public function __construct(array $teams)
     {
         $this->list = $teams;
+        $this->parseList($this->list);
     }
-    public function get()
+    /**
+     * @param array $list
+     */
+    public function setList(array $list)
+    {
+        $this->list = $list;
+    }
+
+    /**
+     * @return array
+     */
+    public function getList()
     {
         return $this->list;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCalendar()
+    {
+        $this->create();
+        return $this->calendar;
+    }
+
+    protected function parseList(array &$list)
+    {
+        if (count($list) % 2) {
+            array_push($list, null);
+        }
     }
 
 /*
 * Algorithm https://es.wikipedia.org/wiki/Sistema_de_todos_contra_todos
 */
-    public function create()
+    protected function create()
     {
         $teams = $this->list;
         
@@ -72,9 +102,7 @@ class CalendarMaker{
         }
         unset($row);
 
-        $total = array_merge($table, $reversed);
-        
-        return $total;
+        $this->calendar = array_merge($table, $reversed);
     }
 }
 //End Of Class

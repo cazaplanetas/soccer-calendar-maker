@@ -5,7 +5,6 @@ use Codehell\SoccerCalendar\CalendarMaker;
 
 class CalendarMakerTest extends PHPUnit_Framework_TestCase
 {
-
     /**
      *
      */
@@ -22,15 +21,10 @@ class CalendarMakerTest extends PHPUnit_Framework_TestCase
      */
     public static function trial_calendar()
     {
+        $reduced = [];
+        $calendar = new CalendarMaker([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, null]);
 
-        $calendar = new CalendarMaker();
-
-        /*
-         * Example array with 6 teams
-         */
-        $calendar->set([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, null]);
-
-        $result = $calendar->create();
+        $result = $calendar->getCalendar();
 
         /*
          * Reduce array to one level for use with array unique
@@ -45,8 +39,7 @@ class CalendarMakerTest extends PHPUnit_Framework_TestCase
         }
 
         $unique = array_unique($reduced);
-        
-        
+
         return count($reduced) == count($unique);
     }
 
